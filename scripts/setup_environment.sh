@@ -10,6 +10,7 @@ status_cmake="not checked"
 status_gtest="not checked"
 status_doxygen="not checked"
 status_graphviz="not checked"
+status_latex="not checked"
 status_json="not checked"
 status_vscode_extensions="not checked"
 
@@ -33,13 +34,14 @@ vscode_extensions=(
 print_report() {
     echo "-----------------------------------"
     echo "Setup Report:"
-    echo "Graphviz: $status_graphviz"
     echo "GCC: $status_gcc"
     echo "GDB: $status_gdb"
     echo "Make: $status_make"
     echo "CMake: $status_cmake"
     echo "Google Test: $status_gtest"
     echo "Doxygen: $status_doxygen"
+    echo "Graphviz: $status_graphviz"
+    echo "LaTeX: $status_latex"
     echo "JSON Library: $status_json"
     echo "VSCode Extensions:"
     # Print detailed status for each extension
@@ -55,7 +57,7 @@ print_report() {
     echo "-----------------------------------"
 }
 
-# Step 1: Install GCC (compiler)
+# Step 01: Install GCC (compiler)
 echo "Installing GCC..."
 sudo apt update && sudo apt install -y build-essential
 if gcc --version > /dev/null 2>&1; then
@@ -64,7 +66,7 @@ else
     status_gcc="error"
 fi
 
-# Step 2: Install GDB (debugger)
+# Step 02: Install GDB (debugger)
 echo "Installing GDB..."
 sudo apt install -y gdb
 if gdb --version > /dev/null 2>&1; then
@@ -73,7 +75,7 @@ else
     status_gdb="error"
 fi
 
-# Step 3: Install Make
+# Step 03: Install Make
 echo "Installing Make..."
 sudo apt install -y make
 if make --version > /dev/null 2>&1; then
@@ -82,7 +84,7 @@ else
     status_make="error"
 fi
 
-# Step 4: Install CMake
+# Step 04: Install CMake
 echo "Installing CMake..."
 sudo apt install -y cmake
 if cmake --version > /dev/null 2>&1; then
@@ -91,7 +93,7 @@ else
     status_cmake="error"
 fi
 
-# Step 5: Install Google Test
+# Step 05: Install Google Test
 echo "Installing Google Test..."
 sudo apt install -y libgtest-dev
 cd /usr/src/gtest || exit
@@ -105,7 +107,7 @@ else
     status_gtest="error"
 fi
 
-# Step 6: Install Doxygen
+# Step 06: Install Doxygen
 echo "Installing Doxygen..."
 sudo apt install -y doxygen
 if doxygen --version > /dev/null 2>&1; then
@@ -114,7 +116,7 @@ else
     status_doxygen="error"
 fi
 
-# Step 7: Install Graphviz
+# Step 07: Install Graphviz
 # Graphviz is required for generating graphs in Doxygen documentation.
 echo "Installing Graphviz..."
 sudo apt install -y graphviz
@@ -141,7 +143,19 @@ else
     fi
 fi
 
-# Step 8: Install JSON Library
+# Step 08: Install LaTeX dependencies
+# LaTeX is required for generating PDF documentation with Doxygen.
+echo "Installing LaTeX dependencies..."
+sudo apt install -y texlive texlive-latex-extra texlive-fonts-recommended dvipng cm-super
+if pdflatex --version > /dev/null 2>&1; then
+    echo "LaTeX installed successfully."
+    status_latex="ok"
+else
+    echo "[ERROR] Failed to install LaTeX."
+    status_latex="error"
+fi
+
+# Step 09: Install JSON Library
 echo "Installing JSON library..."
 sudo apt install -y nlohmann-json3-dev
 if [ -d /usr/include/nlohmann ]; then
@@ -150,7 +164,7 @@ else
     status_json="error"
 fi
 
-# Step 9: Install VSCode Extensions
+# Step 10: Install VSCode Extensions
 # VSCode extensions enhance the development experience.
 echo "Installing VSCode extensions..."
 

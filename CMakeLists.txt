@@ -14,11 +14,13 @@ include_directories(${GTEST_INCLUDE_DIRS})
 # Source files for the Book class
 set(SOURCES
     src/Book.cpp
+    src/LibraryManager.cpp
 )
 
 # Test files
 set(TESTS
     tests/BookTest.cpp
+    tests/LibraryManagerTest.cpp
 )
 
 # Create executable for tests

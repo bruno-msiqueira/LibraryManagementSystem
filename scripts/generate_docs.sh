@@ -1,10 +1,16 @@
 #!/bin/bash
 
-# Script to automate the generation of Doxygen documentation.
+# Script to automate the generation of Doxygen documentation, including PDF.
 
 # Variables
 DOXYFILE="Doxyfile"
 DOCS_OUTPUT_DIR="docs"
+LATEX_DIR="$DOCS_OUTPUT_DIR/latex"
+PDF_FILE="Library_Management_System.pdf"
+
+# Clean previous documentation
+echo "Cleaning up existing documentation..."
+rm -rf "$DOCS_OUTPUT_DIR"
 
 # Check if Doxyfile exists
 if [ ! -f "$DOXYFILE" ]; then
@@ -12,20 +18,31 @@ if [ ! -f "$DOXYFILE" ]; then
     exit 1
 fi
 
-# Clean up the docs directory
-if [ -d "$DOCS_OUTPUT_DIR" ]; then
-    echo "Cleaning up existing documentation..."
-    rm -rf "$DOCS_OUTPUT_DIR"
-fi
-
 # Generate documentation
 echo "Generating documentation with Doxygen..."
 doxygen "$DOXYFILE"
 
-# Check if documentation was generated successfully
-if [ -d "$DOCS_OUTPUT_DIR/html" ]; then
-    echo "Documentation generated successfully in '$DOCS_OUTPUT_DIR'."
-else
-    echo "[ERROR] Documentation generation failed."
+# Check if LaTeX files were generated
+if [ ! -d "$LATEX_DIR" ]; then
+    echo "[ERROR] LaTeX files not generated. Check Doxygen configuration."
     exit 1
 fi
+
+echo "LaTeX files generated successfully."
+
+# Compile PDF
+echo "Compiling PDF documentation..."
+cd "$LATEX_DIR" || exit
+make > /dev/null 2>&1
+
+if [ -f "refman.pdf" ]; then
+    echo "PDF generated successfully."
+    mkdir -p ../
+    mv refman.pdf "../$PDF_FILE"
+else
+    echo "[ERROR] PDF generation failed. Check LaTeX logs for details."
+    exit 1
+fi
+
+# Final message
+echo "Documentation generation complete. PDF available at '$PDF_FILE'."
