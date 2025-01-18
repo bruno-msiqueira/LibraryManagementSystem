@@ -9,6 +9,8 @@ folders=(
     "tests"        # Unit tests
     "scripts"      # Scripts for setup or utilities
     ".vscode"      # VSCode settings
+    "build"        # Build artifacts directory
+    "docs"         # Documentation output directory
 )
 
 # Function to create folders if they don't exist

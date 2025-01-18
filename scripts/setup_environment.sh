@@ -9,6 +9,7 @@ status_make="not checked"
 status_cmake="not checked"
 status_gtest="not checked"
 status_doxygen="not checked"
+status_graphviz="not checked"
 status_json="not checked"
 status_vscode_extensions="not checked"
 
@@ -32,6 +33,7 @@ vscode_extensions=(
 print_report() {
     echo "-----------------------------------"
     echo "Setup Report:"
+    echo "Graphviz: $status_graphviz"
     echo "GCC: $status_gcc"
     echo "GDB: $status_gdb"
     echo "Make: $status_make"
@@ -112,7 +114,34 @@ else
     status_doxygen="error"
 fi
 
-# Step 7: Install JSON Library
+# Step 7: Install Graphviz
+# Graphviz is required for generating graphs in Doxygen documentation.
+echo "Installing Graphviz..."
+sudo apt install -y graphviz
+if dot -V > /dev/null 2>&1; then
+    echo "Graphviz installed successfully."
+else
+    echo "[ERROR] Failed to install Graphviz."
+    status_graphviz="error"
+fi
+
+# Ensure 'dot' has proper permissions
+DOT_PATH=$(which dot)
+if [ -x "$DOT_PATH" ]; then
+    echo "Graphviz 'dot' command has correct permissions."
+    status_graphviz="ok"
+else
+    sudo chmod +x "$DOT_PATH"
+    if [ $? -eq 0 ]; then
+        echo "Permissions for 'dot' command fixed."
+        status_graphviz="ok"
+    else
+        echo "[ERROR] Failed to set permissions for 'dot' command."
+        status_graphviz="error"
+    fi
+fi
+
+# Step 8: Install JSON Library
 echo "Installing JSON library..."
 sudo apt install -y nlohmann-json3-dev
 if [ -d /usr/include/nlohmann ]; then
@@ -121,7 +150,7 @@ else
     status_json="error"
 fi
 
-# Step 8: Install VSCode Extensions
+# Step 9: Install VSCode Extensions
 # VSCode extensions enhance the development experience.
 echo "Installing VSCode extensions..."
 
