@@ -1,9 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 project(LibraryManagementSystem)
 
-# Enable testing
-enable_testing()
-
 # Include directories
 include_directories(include)
 
@@ -11,7 +8,10 @@ include_directories(include)
 find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
 
-# Source files for the Book class
+# Add JSON Library
+find_package(nlohmann_json REQUIRED)
+
+# Source files
 set(SOURCES
     src/Book.cpp
     src/LibraryManager.cpp
@@ -26,8 +26,11 @@ set(TESTS
 # Create executable for tests
 add_executable(runBookTests ${SOURCES} ${TESTS})
 
-# Link Google Test libraries
-target_link_libraries(runBookTests ${GTEST_LIBRARIES} pthread)
+# Link Google Test and JSON libraries
+target_link_libraries(runBookTests ${GTEST_LIBRARIES} pthread nlohmann_json::nlohmann_json)
+
+# Enable testing
+enable_testing()
 
 # Add test command
 add_test(NAME BookTests COMMAND runBookTests)

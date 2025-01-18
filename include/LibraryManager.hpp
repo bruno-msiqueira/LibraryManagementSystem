@@ -58,6 +58,20 @@ public:
      * @param id The ID of the book to return.
      */
     void returnBook(int id);
+
+    /**
+     * @brief Saves the library collection to a JSON file.
+     * @param filename The name of the file to save to.
+     * @return True if the operation is successful, false otherwise.
+     */
+    bool saveToFile(const std::string& filename) const;
+
+    /**
+     * @brief Loads the library collection from a JSON file.
+     * @param filename The name of the file to load from.
+     * @return True if the operation is successful, false otherwise.
+     */
+    bool loadFromFile(const std::string& filename);
 };
 
 #endif

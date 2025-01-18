@@ -79,3 +79,29 @@ TEST(LibraryManagerTest, ListBooks) {
     EXPECT_NE(output.find("1984"), std::string::npos);
     EXPECT_NE(output.find("Animal Farm"), std::string::npos);
 }
+
+TEST(LibraryManagerTest, SaveAndLoadFromFile) {
+    LibraryManager manager;
+
+    Book book1("1984", "George Orwell", 1949, 1, 3);
+    Book book2("Animal Farm", "George Orwell", 1945, 2, 5);
+
+    manager.addBook(book1);
+    manager.addBook(book2);
+
+    // Save to file
+    ASSERT_TRUE(manager.saveToFile("test_library.json"));
+
+    // Create a new manager and load from file
+    LibraryManager loadedManager;
+    ASSERT_TRUE(loadedManager.loadFromFile("test_library.json"));
+
+    // Verify loaded data
+    auto foundBook1 = loadedManager.findBookById(1);
+    ASSERT_NE(foundBook1, nullptr);
+    EXPECT_EQ(foundBook1->getTitle(), "1984");
+
+    auto foundBook2 = loadedManager.findBookById(2);
+    ASSERT_NE(foundBook2, nullptr);
+    EXPECT_EQ(foundBook2->getTitle(), "Animal Farm");
+}
