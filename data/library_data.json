@@ -1,0 +1,33 @@
+{
+    "books": [
+        {
+            "author": "1",
+            "borrowers": [
+                1
+            ],
+            "id": 1,
+            "quantity": 1,
+            "title": "1",
+            "year": 1
+        },
+        {
+            "author": "2",
+            "borrowers": [],
+            "id": 2,
+            "quantity": 2,
+            "title": "2",
+            "year": 2
+        },
+        {
+            "author": "3",
+            "borrowers": [
+                0
+            ],
+            "id": 3,
+            "quantity": 3,
+            "title": "3",
+            "year": 3
+        }
+    ],
+    "nextBookId": 4
+}

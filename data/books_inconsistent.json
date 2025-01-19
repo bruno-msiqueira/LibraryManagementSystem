@@ -1,0 +1,234 @@
+{
+    "books": [
+        {
+            "id": 1,
+            "title": "Sherlock Holmes",
+            "author": "Homer",
+            "year": 1889,
+            "quantity": 5,
+            "borrowers": [
+                0,
+                0,
+                0,
+                2,
+                3,
+                3
+            ]
+        },
+        {
+            "id": 1,
+            "title": "Pride and Prejudice",
+            "author": "J.R.R. Tolkien",
+            "year": 1933,
+            "quantity": 30,
+            "borrowers": [
+                0,
+                3,
+                6,
+                8,
+                12,
+                13,
+                15,
+                19,
+                23,
+                26,
+                27,
+                29,
+                30
+            ]
+        },
+        {
+            "id": 2,
+            "title": "1984",
+            "author": "Herman Melville",
+            "year": 1860,
+            "quantity": 29,
+            "borrowers": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27,
+                28,
+                0
+            ]
+        },
+        {
+            "id": 3,
+            "title": "Dune",
+            "author": "Arthur Conan Doyle",
+            "year": 2009,
+            "quantity": 5,
+            "borrowers": [
+                4,
+                5,
+                1,
+                7,
+                9,
+                10
+            ]
+        },
+        {
+            "id": 4,
+            "title": "Sherlock Holmes",
+            "author": "Jane Austen",
+            "year": 1973,
+            "quantity": 4,
+            "borrowers": [
+                9,
+                10,
+                10,
+                39,
+                7
+            ]
+        },
+        {
+            "id": 5,
+            "title": "Harry Potter and the Sorcerer's Stone",
+            "author": "Herman Melville",
+            "year": 1971,
+            "quantity": 6,
+            "borrowers": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                6,
+                5,
+                4,
+                3,
+                2,
+                1
+            ]
+        },
+        {
+            "id": 6,
+            "title": "The Great Gatsby",
+            "author": "George Orwell",
+            "year": 1944,
+            "quantity": 10,
+            "borrowers": [
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1
+            ]
+        },
+        {
+            "id": 7,
+            "title": "Pride and Prejudice",
+            "author": "Arthur Conan Doyle",
+            "year": 1898,
+            "quantity": 4,
+            "borrowers": [
+                5,
+                4,
+                3,
+                2,
+                4,
+                5,
+                3,
+                24
+            ]
+        },
+        {
+            "id": 8,
+            "title": "Harry Potter and the Sorcerer's Stone",
+            "author": "F. Scott Fitzgerald",
+            "year": 1955,
+            "quantity": 2,
+            "borrowers": [
+                1,
+                1,
+                2,
+                2,
+                1,
+                2
+            ]
+        },
+        {
+            "id": 9,
+            "title": "The Fellowship of the Ring",
+            "author": "Douglas Adams",
+            "year": 1833,
+            "quantity": 0,
+            "borrowers": []
+        },
+        {
+            "id": 9,
+            "title": "The Fellowship of the Ring",
+            "author": "Douglas Adams",
+            "year": 1833,
+            "quantity": 0,
+            "borrowers": [
+                1
+            ]
+        },
+        {
+            "id": 9,
+            "title": "The Fellowship of the Ring",
+            "author": "Douglas Adams",
+            "year": 1833,
+            "quantity": -1,
+            "borrowers": [
+                1
+            ]
+        },
+        {
+            "id": 9,
+            "title": "The Fellowship of the Ring",
+            "author": "Douglas Adams",
+            "year": 1833,
+            "quantity": 0,
+            "borrowers": [
+                1,
+                1
+            ]
+        },
+        {
+            "id": 9,
+            "title": "The Fellowship of the Ring",
+            "author": "Douglas Adams",
+            "year": 1833,
+            "quantity": 0,
+            "borrowers": [
+                1,
+                2
+            ]
+        }
+    ],
+    "nextBookId": 15
+}

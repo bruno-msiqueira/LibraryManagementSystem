@@ -9,9 +9,78 @@ This project is a Library Management System implemented in C++ as part of a tech
 - Integration with Google Test for unit testing
 - Automated documentation generation using Doxygen
 
+## Build and Run Instructions
+1. **Set up the environment**:
+   Run the `setup_environment.sh` script to install all necessary dependencies, such as CMake, Google Test, JSON library, and LaTeX (for documentation). This script ensures your system is correctly configured for building and running the project:
+   ```bash
+   ./scripts/setup_environment.sh
+   ```
+
+2. **Clean previous builds (optional)**:
+   If you want a fresh build, run the `clean_project.sh` script to remove any existing build or documentation files:
+   ```bash
+   ./scripts/clean_project.sh
+   ```
+
+3. **Build the project**:
+   Use the `build_project.sh` script to compile the project. To clean and rebuild the project in one step, pass the `--clean` option:
+   ```bash
+   ./scripts/build_project.sh --clean
+   ```
+   This script generates two executables:
+   - `runBookTests`: For running unit tests.
+   - `library_management`: The main program executable with the interactive menu interface.
+
+4. **Run unit tests**:
+   After building, execute the `runBookTests` binary to verify that all tests pass successfully:
+   ```bash
+   ./build/runBookTests
+   ```
+
+5. **Run the interactive program**:
+   Launch the `library_management` executable to use the interactive menu. You can optionally specify a JSON file for saving/loading the library data:
+   ```bash
+   ./build/library_management ./data/library_data.json
+   ```
+   If no file is specified, the default path (`./data/library_data.json`) is used.
+
+   The `/data` folder contains several datasets for testing different scenarios:
+   - `books_10.json`: A small dataset containing 10 books for quick testing.
+     ```bash
+     ./build/library_management ./data/books_10.json
+     ```
+   - `books_100.json`: A medium-sized dataset with 100 books for more comprehensive testing.
+     ```bash
+     ./build/library_management ./data/books_100.json
+     ```
+   - `books_1000.json`: A large dataset with 1000 books to evaluate performance with substantial data.
+     ```bash
+     ./build/library_management ./data/books_1000.json
+     ```
+   - `books_empty.json`: An empty dataset to test the program's behavior with no initial data.
+     ```bash
+     ./build/library_management ./data/books_empty.json
+     ```
+   - `books_inconsistent.json`: A dataset with inconsistencies, such as duplicate or invalid entries, to test error handling.
+     ```bash
+     ./build/library_management ./data/books_inconsistent.json
+     ```
+   - `library_data.json`: The default dataset for general usage and testing.
+     ```bash
+     ./build/library_management ./data/library_data.json
+     ```
+6. **Generate documentation**:
+   To create up-to-date documentation, including a PDF version, run the `generate_docs.sh` script:
+   ```bash
+   ./scripts/generate_docs.sh
+   ```
+   The documentation will be available in the `docs/` directory, with a PDF file generated in `docs/Library_Management_System.pdf`.
+
 ## Features Implemented
 - Core class `Book` for managing book details, including attributes like title, author, and publication year.
-- `LibraryManager` class for managing a collection of books.
+- `LibraryManager` class for managing a collection of books, with added functionality for data persistence.
+- Support for user-specific borrowing and returning operations with clear status handling.
+- Interactive menu system implemented in `main.cpp` for user-friendly operation.
 - Unit tests for `Book` and `LibraryManager` to ensure reliability.
 - Automated build, clean, and documentation generation scripts for streamlined development.
 - Persistence of data using JSON files for saving and loading the book collection.
@@ -44,43 +113,16 @@ LibraryManagementSystem/
 ```
 
 ## Available Scripts
-### `build_project.sh`
-- Automates the process of building and testing the project.
-- Steps include:
-  - Cleaning and setting up the `build/` directory.
-  - Running `cmake` to generate build files.
-  - Compiling the project using `make`.
-  - Executing tests to ensure code functionality.
-
-### `clean_project.sh`
-- Automates the process of cleaning the project directory by removing unnecessary and temporary files.
-- Steps include:
-  - Deleting the `build/` directory and all its contents.
-  - Removing any temporary files generated during the build process.
-  - Ensuring a clean state for the project to avoid conflicts in subsequent builds.
-
-### `generate_docs.sh`
-- Automates the generation of project documentation using Doxygen.
-- Steps include:
-  - Cleaning up the existing `/docs` directory.
-  - Running Doxygen to generate documentation.
-  - Compiling LaTeX files to generate PDF documentation if LaTeX is installed.
-
-### `setup_environment.sh`
-- Automates the installation of development tools, libraries, and VSCode extensions required for the project.
-- Includes detailed status reporting to ensure all dependencies are correctly installed.
-
-### `setup_git_aliases.sh`
-- Registers useful Git aliases to enhance productivity during development.
-- Aliases include commands for viewing logs, updating submodules, and syncing repositories.
-
-## Build and Run Instructions
-1. Ensure all dependencies (e.g., CMake, compilers) are installed.
-2. Run `setup_environment.sh` to prepare the environment.
-3. Execute `build_project.sh` to compile the project and testing.
-4. Generate documentation using `generate_docs.sh`.
+1. `build_project.sh`: Builds the project using CMake. Supports optional cleaning before building.
+2. `clean_project.sh`: Cleans build files and temporary data.
+3. `setup_environment.sh`: Sets up the environment and dependencies for the project, including JSON and LaTeX libraries.
+4. `generate_docs.sh`: Generates detailed documentation using Doxygen, including PDF output.
+5. `setup_git_aliases.sh`: Configures helpful git aliases.
+6. `create_project_structure.sh`: Generates the initial directory structure for the project.
 
 ## Future Work
-- Implement Interactive Menu via CLI.
-- Extend the system to include interactive menus for users to perform library operations.
-- Add support for multiple users and library staff roles.
+- Implement a multi-service architecture with a unified manager for handling library data operations, supporting n services for query/borrowing/returning and n services for maintaining book/user/staff records.
+- Enhance the interactive menu to include more advanced options for book management.
+- Introduce a graphical user interface (GUI) for ease of use.
+- Optimize the `LibraryManager` for handling large datasets.
+- Add features to export and import the book collection in different formats (e.g., CSV, JSON).

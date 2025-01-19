@@ -10,6 +10,7 @@
  */
 enum class BookStatus {
     Success,                //< Operation completed successfully
+    NoBooks,                //< No books
     AlreadyBorrowed,        //< The user has already borrowed this book
     NoCopiesAvailable,      //< No copies are available for borrowing
     NotBorrowedByUser,      //< The user is not borrowing this book
@@ -29,8 +30,8 @@ private:
     std::string m_author;                //< Author of the book
     int m_year;                          //< Year of publication
     int m_quantity;                      //< Number of copies available for borrowing
-    std::unordered_set<int> m_borrowers; //< Set of user IDs who have borrowed the book
     int m_id;                            //< Unique identifier for the book
+    std::unordered_set<int> m_borrowers; //< Set of user IDs who have borrowed the book
 
 public:
     /**

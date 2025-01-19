@@ -2,7 +2,9 @@
 #include <iostream>
 
 Book::Book(std::string title, std::string author, int year, int qty, int id)
-    : m_title(title), m_author(author), m_year(year), m_quantity(qty),  m_id(id) {}
+    : m_title(title), m_author(author), m_year(year), m_quantity(qty), m_id(id) {
+        m_borrowers.clear();
+}
 
 std::string Book::getTitle() const {
     return m_title;
@@ -36,7 +38,11 @@ void Book::setQuantity(int quantity) {
 std::unordered_set<int> Book::getBorrowers() const {
     return m_borrowers;
 }
+
 BookStatus Book::borrowBook(int userId) {
+    if (getQuantity() <= 0) {
+        return BookStatus::NoBooks;
+    }
     if (getAvailableQuantity() <= 0) {
         return BookStatus::NoCopiesAvailable;
     }
@@ -49,6 +55,9 @@ BookStatus Book::borrowBook(int userId) {
 }
 
 BookStatus Book::returnBook(int userId) {
+    if (getQuantity() <= 0) {
+        return BookStatus::NoBooks;
+    }
     auto it = m_borrowers.find(userId);
     if ((getBorrowerCount() <= 0) || (m_borrowers.end() == it)) {
         return BookStatus::NotBorrowedByUser;
@@ -74,13 +83,26 @@ void Book::display() const {
               << ", Year: " << m_year
               << ", Quantity: " << m_quantity
               << ", Available: " << getAvailableQuantity()
-              << ", Borrowed: " << getBorrowerCount() << std::endl;
-}
+              << ", Borrowed: " << getBorrowerCount()
+              << ", Quantity Check: " << (getBorrowerCount() <= m_quantity ? "Ok" : "Error")
+              << ", Borrowers: [";
 
+    for (auto it = m_borrowers.begin(); it != m_borrowers.end(); ++it) {
+        if (it != m_borrowers.begin()) {
+            std::cout << ", ";
+        }
+        std::cout << *it;
+    }
+
+    std::cout << "]\n";
+}
 void Book::handleStatus(BookStatus status) {
     switch (status) {
     case BookStatus::Success:
         std::cout << "Operation completed successfully.\n";
+        break;
+    case BookStatus::NoBooks:
+        std::cout << "No books.\n";
         break;
     case BookStatus::AlreadyBorrowed:
         std::cout << "You have already borrowed this book.\n";

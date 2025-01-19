@@ -15,6 +15,11 @@ private:
 
 public:
     /**
+     * @brief Get quantity of unique books
+     */
+    int getCountUniqueBooks();
+
+    /**
      * @brief Adds a book to the library collection.
      *
      * @param book The book to add.
@@ -86,6 +91,13 @@ public:
      * @return True if the operation is successful, false otherwise.
      */
     bool loadFromFile(const std::string& filename);
+
+    /**
+     * @brief Displays Lybrary Summary
+     *
+     * @param summaryTitle Title to be show in the summary
+     */
+    void displaySummary(const std::string& summaryTitle) const;
 };
 
 #endif

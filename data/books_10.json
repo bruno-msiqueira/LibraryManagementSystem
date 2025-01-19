@@ -1,0 +1,106 @@
+{
+    "books": [
+        {
+            "id": 1,
+            "title": "Sherlock Holmes",
+            "author": "Arthur Conan Doyle",
+            "year": 1850,
+            "quantity": 29,
+            "borrowers": []
+        },
+        {
+            "id": 2,
+            "title": "Murder on the Orient Express",
+            "author": "Agatha Christie",
+            "year": 1851,
+            "quantity": 32,
+            "borrowers": [
+                340,
+                68,
+                77,
+                143,
+                365,
+                402,
+                61,
+                154,
+                303,
+                285,
+                203,
+                227,
+                412,
+                301,
+                50,
+                248,
+                278,
+                27,
+                237,
+                185
+            ]
+        },
+        {
+            "id": 3,
+            "title": "The Iliad",
+            "author": "Homer",
+            "year": 1852,
+            "quantity": 56,
+            "borrowers": []
+        },
+        {
+            "id": 4,
+            "title": "The Odyssey",
+            "author": "Homer",
+            "year": 1853,
+            "quantity": 1,
+            "borrowers": []
+        },
+        {
+            "id": 5,
+            "title": "The Lord of the Rings",
+            "author": "J.R.R. Tolkien",
+            "year": 1854,
+            "quantity": 83,
+            "borrowers": []
+        },
+        {
+            "id": 6,
+            "title": "Dune",
+            "author": "Frank Herbert",
+            "year": 1855,
+            "quantity": 14,
+            "borrowers": []
+        },
+        {
+            "id": 7,
+            "title": "The Hitchhiker's Guide to the Galaxy",
+            "author": "Douglas Adams",
+            "year": 1856,
+            "quantity": 8,
+            "borrowers": []
+        },
+        {
+            "id": 8,
+            "title": "Harry Potter and the Philosopher's Stone",
+            "author": "J.K. Rowling",
+            "year": 1857,
+            "quantity": 25,
+            "borrowers": []
+        },
+        {
+            "id": 9,
+            "title": "Harry Potter and the Chamber of Secrets",
+            "author": "J.K. Rowling",
+            "year": 1858,
+            "quantity": 4,
+            "borrowers": []
+        },
+        {
+            "id": 10,
+            "title": "Harry Potter and the Prisoner of Azkaban",
+            "author": "J.K. Rowling",
+            "year": 1859,
+            "quantity": 89,
+            "borrowers": []
+        }
+    ],
+    "nextBookId": 11
+}
