@@ -16,27 +16,34 @@ private:
 public:
     /**
      * @brief Adds a book to the library collection.
+     *
      * @param book The book to add.
      */
-    void addBook(const Book& book);
+    void addBook(Book book);
 
     /**
      * @brief Finds a book by its unique ID.
+     *
      * @param id The ID of the book.
+     *
      * @return A pointer to the book if found, nullptr otherwise.
      */
     Book* findBookById(int id);
 
     /**
      * @brief Finds books by their title.
+     *
      * @param title The title to search for.
+     *
      * @return A vector of books matching the title.
      */
     std::vector<Book> findBooksByTitle(const std::string& title);
 
     /**
      * @brief Finds books by their author.
+     *
      * @param author The author to search for.
+     *
      * @return A vector of books matching the author.
      */
     std::vector<Book> findBooksByAuthor(const std::string& author);
@@ -48,16 +55,23 @@ public:
 
     /**
      * @brief Borrows a book by its ID.
+     *
      * @param id The ID of the book to borrow.
-     * @return True if the book was successfully borrowed, false otherwise.
+     * @param borrowerId User code who is lending the book
+     *
+     * @return A status indicating the result of the operation.
      */
-    bool borrowBook(int id);
+    BookStatus borrowBook(int id, int borrowerId);
 
     /**
      * @brief Returns a book by its ID.
+     *
      * @param id The ID of the book to return.
+     * @param borrowerId User code who is lending the book
+     *
+     * @return A status indicating the result of the operation.
      */
-    void returnBook(int id);
+    BookStatus returnBook(int id, int borrowerId);
 
     /**
      * @brief Saves the library collection to a JSON file.

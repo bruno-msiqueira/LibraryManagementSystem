@@ -5,6 +5,22 @@
 # Variables
 BUILD_DIR="build"
 EXECUTABLE="runBookTests"
+CLEAN_BUILD=false
+
+# Parse command-line arguments
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --clean)
+            CLEAN_BUILD=true
+            shift
+            ;;
+        *)
+            echo "[ERROR] Unknown option: $1"
+            echo "Usage: $0 [--clean]"
+            exit 1
+            ;;
+    esac
+done
 
 # Colors for messages
 GREEN="\033[0;32m"
@@ -14,20 +30,24 @@ RESET="\033[0m"
 echo -e "${GREEN}Starting build process...${RESET}"
 
 # Step 1: Clean or create the build directory
-if [ -d "$BUILD_DIR" ]; then
-    echo "Cleaning existing build directory..."
-    rm -rf "$BUILD_DIR"
+if [ "$CLEAN_BUILD" = true ]; then
+    if [ -d "$BUILD_DIR" ]; then
+        echo "Cleaning existing build directory..."
+        rm -rf "$BUILD_DIR"
+    fi
 fi
 mkdir "$BUILD_DIR"
 cd "$BUILD_DIR" || exit
 
 # Step 2: Generate build files with CMake
 echo "Generating build files with CMake..."
-if cmake ..; then
-    echo -e "${GREEN}CMake configuration completed successfully.${RESET}"
-else
-    echo -e "${RED}CMake configuration failed.${RESET}"
-    exit 1
+if [ "$CLEAN_BUILD" = true ]; then
+    if cmake ..; then
+        echo -e "${GREEN}CMake configuration completed successfully.${RESET}"
+    else
+        echo -e "${RED}CMake configuration failed.${RESET}"
+        exit 1
+    fi
 fi
 
 # Step 3: Compile the project

@@ -26,6 +26,10 @@ set(TESTS
 # Create executable for tests
 add_executable(runBookTests ${SOURCES} ${TESTS})
 
+# Create executable for main program
+add_executable(library_management src/main.cpp src/Book.cpp src/LibraryManager.cpp)
+target_link_libraries(library_management pthread nlohmann_json::nlohmann_json)
+
 # Link Google Test and JSON libraries
 target_link_libraries(runBookTests ${GTEST_LIBRARIES} pthread nlohmann_json::nlohmann_json)
 

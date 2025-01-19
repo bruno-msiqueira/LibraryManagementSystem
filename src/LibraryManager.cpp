@@ -3,7 +3,8 @@
 #include <fstream>
 #include <nlohmann/json.hpp>
 
-void LibraryManager::addBook(const Book& book) {
+void LibraryManager::addBook(Book book) {
+    book.setId(books.size() + 1);
     books.push_back(book);
 }
 
@@ -42,30 +43,34 @@ void LibraryManager::listBooks() const {
     }
 }
 
-bool LibraryManager::borrowBook(int id) {
+BookStatus LibraryManager::borrowBook(int id, int borrowerId) {
     Book* book = findBookById(id);
     if (book) {
-        return book->borrowBook();
+        return book->borrowBook(borrowerId);
     }
-    return false;
+    return BookStatus::InvalidOperation;
 }
 
-void LibraryManager::returnBook(int id) {
+BookStatus LibraryManager::returnBook(int id, int borrowerId) {
     Book* book = findBookById(id);
     if (book) {
-        book->returnBook();
+        return book->returnBook(borrowerId);
     }
+    return BookStatus::InvalidOperation;
 }
 
 bool LibraryManager::saveToFile(const std::string& filename) const {
     nlohmann::json jsonData;
+
     for (const auto& book : books) {
+        std::vector<int> borrowersVector(book.getBorrowers().begin(), book.getBorrowers().end());
         jsonData.push_back({
-            {"id", book.getId()},
             {"title", book.getTitle()},
             {"author", book.getAuthor()},
             {"year", book.getYear()},
-            {"quantity", book.getQuantity()}
+            {"quantity", book.getQuantity()},
+            {"id", book.getId()},
+            {"borrowers", borrowersVector}
         });
     }
 
@@ -91,13 +96,19 @@ bool LibraryManager::loadFromFile(const std::string& filename) {
 
     books.clear();
     for (const auto& item : jsonData) {
-        books.emplace_back(
+        Book book(
             item.at("title").get<std::string>(),
             item.at("author").get<std::string>(),
             item.at("year").get<int>(),
-            item.at("id").get<int>(),
-            item.at("quantity").get<int>()
+            item.at("quantity").get<int>(),
+            item.at("id").get<int>()
         );
+
+        for (int userId : item.at("borrowers")) {
+            book.borrowBook(userId); // Restaurando os usuários que pegaram o livro emprestado
+        }
+
+        books.push_back(book);
     }
 
     return true;

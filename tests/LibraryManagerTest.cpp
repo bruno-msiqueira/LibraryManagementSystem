@@ -4,7 +4,7 @@
 
 TEST(LibraryManagerTest, AddBook) {
     LibraryManager manager;
-    Book book("1984", "George Orwell", 1949, 1, 3);
+    Book book("1984", "George Orwell", 1949, 3);
 
     manager.addBook(book);
     auto foundBook = manager.findBookById(1);
@@ -51,23 +51,49 @@ TEST(LibraryManagerTest, FindBooksByAuthor) {
     EXPECT_EQ(results.size(), 2);
 }
 
+TEST(LibraryManagerTest, BorrowBookStatus) {
+    LibraryManager manager;
+    manager.addBook(Book("1984", "George Orwell", 1949, 2));
+
+    EXPECT_EQ(manager.borrowBook(1, 1), BookStatus::Success);
+    EXPECT_EQ(manager.borrowBook(1, 1), BookStatus::AlreadyBorrowed);
+    EXPECT_EQ(manager.borrowBook(1, 2), BookStatus::Success);
+    EXPECT_EQ(manager.borrowBook(1, 3), BookStatus::NoCopiesAvailable);
+    EXPECT_EQ(manager.borrowBook(2, 1), BookStatus::InvalidOperation);
+}
+
+TEST(LibraryManagerTest, ReturnBookStatus) {
+    LibraryManager manager;
+    manager.addBook(Book("1984", "George Orwell", 1949, 1));
+
+    EXPECT_EQ(manager.returnBook(1, 1), BookStatus::NotBorrowedByUser);
+    EXPECT_EQ(manager.borrowBook(1, 1), BookStatus::Success);
+    EXPECT_EQ(manager.borrowBook(1, 2), BookStatus::NoCopiesAvailable);
+    EXPECT_EQ(manager.returnBook(1, 1), BookStatus::Success);
+    EXPECT_EQ(manager.returnBook(1, 1), BookStatus::NotBorrowedByUser);
+}
+
 TEST(LibraryManagerTest, BorrowAndReturnBook) {
     LibraryManager manager;
-    Book book("1984", "George Orwell", 1949, 1, 3);
+    Book book("1984", "George Orwell", 1949, 3);
 
     manager.addBook(book);
 
-    EXPECT_TRUE(manager.borrowBook(1));  // Borrow a book
-    EXPECT_EQ(manager.findBookById(1)->getQuantity(), 2);
-
-    manager.returnBook(1);  // Return the book
     EXPECT_EQ(manager.findBookById(1)->getQuantity(), 3);
+    EXPECT_EQ(manager.findBookById(1)->getAvailableQuantity(), 3);
+    EXPECT_EQ(manager.borrowBook(1, 1), BookStatus::Success);
+    EXPECT_EQ(manager.findBookById(1)->getQuantity(), 3);
+    EXPECT_EQ(manager.findBookById(1)->getAvailableQuantity(), 2);
+
+    manager.returnBook(1, 1);  // Return the book
+    EXPECT_EQ(manager.findBookById(1)->getQuantity(), 3);
+    EXPECT_EQ(manager.findBookById(1)->getAvailableQuantity(), 3);
 }
 
 TEST(LibraryManagerTest, ListBooks) {
     LibraryManager manager;
-    Book book1("1984", "George Orwell", 1949, 1, 3);
-    Book book2("Animal Farm", "George Orwell", 1945, 2, 5);
+    Book book1("1984", "George Orwell", 1949, 3);
+    Book book2("Animal Farm", "George Orwell", 1945, 5);
 
     manager.addBook(book1);
     manager.addBook(book2);
@@ -83,8 +109,8 @@ TEST(LibraryManagerTest, ListBooks) {
 TEST(LibraryManagerTest, SaveAndLoadFromFile) {
     LibraryManager manager;
 
-    Book book1("1984", "George Orwell", 1949, 1, 3);
-    Book book2("Animal Farm", "George Orwell", 1945, 2, 5);
+    Book book1("1984", "George Orwell", 1949, 3);
+    Book book2("Animal Farm", "George Orwell", 1945, 5);
 
     manager.addBook(book1);
     manager.addBook(book2);
@@ -104,4 +130,7 @@ TEST(LibraryManagerTest, SaveAndLoadFromFile) {
     auto foundBook2 = loadedManager.findBookById(2);
     ASSERT_NE(foundBook2, nullptr);
     EXPECT_EQ(foundBook2->getTitle(), "Animal Farm");
+
+    ASSERT_EQ(loadedManager.findBookById(0), nullptr);
+    ASSERT_EQ(loadedManager.findBookById(3), nullptr);
 }
